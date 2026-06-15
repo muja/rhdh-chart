@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
 
@@ -45,6 +45,10 @@ jobs:
       - name: Create KIND Cluster
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@ef37e7f390d99f746eb8b610417061a60e82a6cc # pin@v1.14.0
+
+      - name: Install Gateway API CRDs
+        if: steps.list-changed.outputs.changed == 'true'
+        run: kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.0/standard-install.yaml
 
       - name: Install Ingress Controller
         if: steps.list-changed.outputs.changed == 'true'
