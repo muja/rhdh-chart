@@ -97,6 +97,31 @@ ingress:
   #     secretName: backstage-env -->
   extraTls: []
 
+# -- HTTPRoute parameters
+httpRoute:
+
+  # -- Enable the creation of the HTTPRoute resource
+  enabled: false
+
+  # -- Additional labels for the HTTPRoute resource
+  labels: {}
+
+  # -- Additional annotations for the HTTPRoute resource
+  annotations: {}
+
+  # -- List of Gateways this HTTPRoute is attached to
+  parentRefs: []
+
+  # -- List of hostnames matching HTTP header
+  hostnames: []
+
+  # -- List of rules and filters applied to the HTTPRoute
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
 # -- Backstage parameters
 # @default -- See below
 backstage:
@@ -273,6 +298,10 @@ backstage:
   #  The security settings that you specify for a Pod apply to all Containers in the Pod.
   # <br /> Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext: {}
+
+  # -- Priority class name for pod scheduling
+  # <br /> Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/
+  priorityClassName: ""
 
   # -- Security settings for a Container.
   # <br /> Ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
